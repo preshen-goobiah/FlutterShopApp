@@ -4,5 +4,4 @@ E-commerce mobile app built with Flutter.
 
 ### Santos Enoque Tutorial 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Dy_zBF6rJFc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+[![Flutter YouTube Tutorial](https://imgur.com/a/dHieE1w.png)](https://www.youtube.com/watch?v=Dy_zBF6rJFc&list=PLmnT6naTGy2SC82FMSCrvZNogg5T1H7iF&index=1)
