@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 /*class HomePage extends StatelessWidget {
   @override
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart';
   }
 }*/
 
-
 class HomePage extends StatefulWidget{
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,9 +21,29 @@ class _HomePageState extends State<HomePage>
 {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    Widget image_carousel = new Container(
+        height: 200,
+        child: new Carousel(
+          boxFit: BoxFit.cover,
+          dotSize: 2,
+          indicatorBgPadding: 1,
+          images: [
+            AssetImage('images/c1.jpg'),
+            AssetImage('images/m1.jpeg'),
+            AssetImage('images/w3.jpeg'),
+            AssetImage('images/w4.jpeg'),
+            AssetImage('images/m2.jpg'),
+          ],
+          autoplay: false,
+          animationCurve: Curves.fastOutSlowIn,
+          animationDuration: Duration(milliseconds: 1000)
+        )
+    );
+
     return Scaffold(
       appBar: new AppBar(
+        elevation: 0.5,
         backgroundColor: Colors.redAccent,
         title: Text('FashApp'),
         actions: <Widget>[
@@ -102,7 +122,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('Settings'),
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.settings, color: Colors.amber,),
 
               ),
             ),
@@ -110,7 +130,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('About'),
-                leading: Icon(Icons.help),
+                leading: Icon(Icons.help, color: Colors.amber),
 
               ),
             )
@@ -118,6 +138,12 @@ class _HomePageState extends State<HomePage>
           ],
         )
 
+      ),
+
+      body: new ListView(
+        children: <Widget>[
+          image_carousel
+        ],
       ),
     );
   }
