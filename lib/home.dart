@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage>
     // TODO: implement build
     return Scaffold(
       appBar: new AppBar(
-        title: Text('ShopApp')
+        title: Text('ShopApp2')
       ),
     );
   }
