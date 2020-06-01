@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
+// helper files
+
+import 'components/horizontal_listview.dart';
+
 /*class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context)
@@ -142,7 +146,11 @@ class _HomePageState extends State<HomePage>
 
       body: new ListView(
         children: <Widget>[
-          image_carousel
+          image_carousel,
+          new Padding(padding: const EdgeInsets.all(8.0),
+          child: new Text('Categories'))
+
+
         ],
       ),
     );
