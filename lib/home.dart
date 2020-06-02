@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 // helper files
-
 import 'components/horizontal_listview.dart';
 
 /*class HomePage extends StatelessWidget {
@@ -153,6 +152,25 @@ class _HomePageState extends State<HomePage>
 
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Business'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('School'),
+          ),
+        ],
+        selectedItemColor: Colors.amber[800],
+
+      ),
     );
   }
 }
+
