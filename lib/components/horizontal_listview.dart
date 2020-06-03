@@ -65,8 +65,9 @@ class Category extends StatelessWidget {
       onTap: (){},
       child: Container(
         width: 100,
+        height: 200,
         child: ListTile(
-          title: Image.asset(image_location, width: 100, height: 80,),
+          title: Image.asset(image_location, height: 80,),
           subtitle: Container(
             alignment: Alignment.topCenter,
               child: Text(image_caption, style: new TextStyle(fontSize: 12.0))),
