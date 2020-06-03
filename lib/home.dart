@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutterapp/components/horizontal_listview.dart';
+import 'package:flutterapp/components/products.dart';
 
 // helper files
 import 'components/horizontal_listview.dart';
@@ -146,9 +148,23 @@ class _HomePageState extends State<HomePage>
       body: new ListView(
         children: <Widget>[
           image_carousel,
-          new Padding(padding: const EdgeInsets.all(8.0),
-          child: new Text('Categories'))
+          // padding widget
+          new Padding(padding: const EdgeInsets.all(20.0),
+          child: new Text('Categories')),
 
+          // horizontal list view
+          HorizontalList(),
+
+          // padding widget
+          new Padding(padding: const EdgeInsets.all(20.0),
+            child: new Text('Recent Products'),
+          ),
+
+          // grid view
+          Container(
+            height: 320,
+            child: Products(),
+          )
 
         ],
       ),
