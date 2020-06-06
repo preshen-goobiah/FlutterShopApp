@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage>
           ],
           autoplay: false,
           animationCurve: Curves.fastOutSlowIn,
-          animationDuration: Duration(milliseconds: 1000)
+          animationDuration: Duration(milliseconds: 1000),
+          dotBgColor: Colors.transparent,
         )
     );
 
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage>
             onTap: (){},
             child: ListTile(
               title: Text('Home Page'),
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.home, color: Colors.redAccent,),
 
             ),
           ),
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('My Account'),
-                leading: Icon(Icons.person),
+                leading: Icon(Icons.person, color: Colors.redAccent,),
 
               ),
             ),
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('My Orders'),
-                leading: Icon(Icons.shopping_basket),
+                leading: Icon(Icons.shopping_basket, color: Colors.redAccent,),
 
               ),
             ),
@@ -107,8 +108,8 @@ class _HomePageState extends State<HomePage>
             InkWell(
               onTap: (){},
               child: ListTile(
-                title: Text('Categories'),
-                leading: Icon(Icons.dashboard),
+                title: Text('Shopping Cart'),
+                leading: Icon(Icons.shopping_cart, color: Colors.redAccent, ),
 
               ),
             ),
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('Favorites'),
-                leading: Icon(Icons.favorite),
+                leading: Icon(Icons.favorite, color: Colors.redAccent,),
 
               ),
             ),
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('Settings'),
-                leading: Icon(Icons.settings, color: Colors.amber,),
+                leading: Icon(Icons.settings,),
 
               ),
             ),
@@ -135,7 +136,7 @@ class _HomePageState extends State<HomePage>
               onTap: (){},
               child: ListTile(
                 title: Text('About'),
-                leading: Icon(Icons.help, color: Colors.amber),
+                leading: Icon(Icons.help,),
 
               ),
             )
@@ -168,24 +169,7 @@ class _HomePageState extends State<HomePage>
 
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
-        selectedItemColor: Colors.amber[800],
 
-      ),
     );
   }
 }
