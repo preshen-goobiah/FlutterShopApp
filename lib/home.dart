@@ -7,16 +7,6 @@ import 'package:flutterapp/pages/cart.dart';
 // helper files
 import 'components/horizontal_listview.dart';
 
-/*class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context)
-  {
-    return Container(
-        color: Colors.lightBlue,
-        child: Text("Hey", style: TextStyle(color: Colors.white))
-    );
-  }
-}*/
 
 class HomePage extends StatefulWidget{
   @override
@@ -149,9 +139,9 @@ class _HomePageState extends State<HomePage>
 
       ),
 
-      body: new ListView(
+      body: new Column(
         children: <Widget>[
-          image_carousel,
+          //image_carousel,
           // padding widget
           new Padding(padding: const EdgeInsets.all(20.0),
           child: new Text('Categories')),
@@ -165,10 +155,8 @@ class _HomePageState extends State<HomePage>
           ),
 
           // grid view
-          Container(
-            height: 320,
-            child: Products(),
-          )
+          Flexible(child: Products()),
+
 
         ],
       ),
