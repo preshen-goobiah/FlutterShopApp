@@ -37,7 +37,7 @@ class _ProductsState extends State<Products>
     },
     {
       'name': 'Pants',
-      'picture': 'images/products/pants1.jpeg',
+      'picture': 'images/products/pants1.jpg',
       'old_price': 100,
       'price': 55,
     },
