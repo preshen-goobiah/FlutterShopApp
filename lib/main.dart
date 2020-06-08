@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import './pages/login.dart';
 
 // stateful widget for changing content like a product catalog
 // stateless widget for static content like a login screen
@@ -7,7 +7,8 @@ import 'home.dart';
 void main(){
   runApp(
     MaterialApp(
-      home: HomePage()
+      debugShowCheckedModeBanner: false,
+      home: Login()
     )
   );
 }
