@@ -102,14 +102,41 @@ class _LoginState extends State<Login> {
         Fluttertoast.showToast(msg: "Login failed");
 
       }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-    )
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: new Text("Login", style: TextStyle(color: Colors.red.shade900)),
+          elevation: 0.5,
+    ),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: FlatButton(
+              color: Colors.red.shade900,
+              onPressed: (){
+                handleSignIn();
+              },
+              child: Text("Sign in/Sign up with Google"),
+            ),
+          ),
+
+          Visibility(
+            visible: loading??true,
+            child: Container(
+              color: Colors.white.withOpacity(0.7),
+              child:  CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+              ),
+            ),
+
+          )
+        ],
+      )
     );
   }
 
