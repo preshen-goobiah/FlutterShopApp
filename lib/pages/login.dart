@@ -15,6 +15,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GoogleSignIn googleSignin = new GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+
+
   SharedPreferences preferences;
   bool loading = false;
   bool isloggedIn = false;
@@ -23,7 +28,7 @@ class _LoginState extends State<Login> {
   void initState(){
     // calling initial state of login class
     super.initState();
-    isSignedIn();
+   // isSignedIn();
   }
 
   void isSignedIn() async {
@@ -62,6 +67,7 @@ class _LoginState extends State<Login> {
 
     FirebaseUser firebaseUser = (await firebaseAuth.signInWithCredential(credential)).user;
 
+    print(firebaseUser.uid);
     if(firebaseUser != null)
       {
         final QuerySnapshot result = await Firestore.instance.collection(("users")).where("id",
@@ -107,36 +113,55 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: new Text("Login", style: TextStyle(color: Colors.red.shade900)),
-          elevation: 0.5,
-    ),
       body: Stack(
         children: <Widget>[
-          Center(
-            child: FlatButton(
-              color: Colors.red.shade900,
-              onPressed: (){
-                handleSignIn();
-              },
-              child: Text("Sign in/Sign up with Google"),
-            ),
+          Image.asset('images/back.jpg', fit: BoxFit.cover, width:  double.infinity,),
+          Container(
+            color: Colors.black.withOpacity(0.15),
+            width: double.infinity,
+            height: double.infinity
           ),
 
+          Container(
+            alignment: Alignment.center,
+            child: Center(
+              child: Form(
+                key: _formKey,
+                child: Column(children: <Widget>[
+
+                ],),
+              )
+            ),
+          ),
           Visibility(
             visible: loading??true,
             child: Container(
               color: Colors.white.withOpacity(0.7),
-              child:  CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+              child:  Container(
+                alignment: Alignment.center,
+                color: Colors.white.withOpacity(0.9),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+                ),
               ),
             ),
 
           )
         ],
-      )
+      ),
+
+      bottomNavigationBar: Container(
+       child:  Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 8, bottom:8),
+            child: FlatButton(
+              color: Colors.red.shade900,
+              onPressed: (){
+                handleSignIn();
+              },
+              child: Text("Sign in/Sign up with Google", style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ),
     );
   }
 
