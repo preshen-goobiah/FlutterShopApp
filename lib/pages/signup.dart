@@ -27,8 +27,6 @@ class _SignupState extends State<Signup> {
   String gender;
   String groupValue = 'male';
 
-
-
   bool loading = false;
 
   @override
@@ -68,20 +66,49 @@ class _SignupState extends State<Signup> {
                             ),
                             keyboardType: TextInputType.emailAddress,
                             controller: _nameTextController,
-                            validator: (value){
-                              Pattern pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}';
-                              RegExp regex = new RegExp(pattern);
 
-                              if(!regex.hasMatch(value))
-                              {
-                                return 'Please make sure your email address is valid';
-                              }
-                              else
-                              {
-                                return null;
-                              }
-                            },
                           ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                      child: Container(
+                        color: Colors.white.withOpacity(0.4),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: ListTile(
+                                title: Text("male", style: TextStyle(color: Colors.white,),
+                                    textAlign: TextAlign.end
+                                ),
+                                trailing: Radio(
+                                  value: "male",
+
+                                  groupValue: groupValue,
+                                  onChanged: (e) => valueChanged(e),
+                                ),
+
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: Text("female", style: TextStyle(color: Colors.white,),
+                                    textAlign: TextAlign.end
+                                ),
+                                trailing: Radio(
+                                  value: "female",
+
+                                  groupValue: groupValue,
+                                  onChanged: (e) => valueChanged(e),
+                                ),
+
+                              ),
+                            ),
+
+
+                          ],
                         ),
                       ),
                     ),
@@ -228,5 +255,17 @@ class _SignupState extends State<Signup> {
 
 
     );
+  }
+
+  valueChanged(e) {
+    setState(() {
+      if(e == "male")
+        {
+          groupValue = e;
+        }
+      else if(e == "female"){
+        groupValue = e;
+      }
+    });
   }
 }
