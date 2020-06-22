@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../home.dart';
-
+import '../db/users.dart';
 
 
 class Signup extends StatefulWidget {
@@ -18,6 +18,8 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  UserServices _userServices = UserServices();
+
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailTextController = TextEditingController();
@@ -26,7 +28,7 @@ class _SignupState extends State<Signup> {
   TextEditingController _confirmPasswordController = TextEditingController();
   String gender;
   String groupValue = 'male';
-
+  bool hidePass = true;
   bool loading = false;
 
   @override
@@ -63,6 +65,8 @@ class _SignupState extends State<Signup> {
                             decoration: InputDecoration(
                               hintText: "Name",
                               icon: Icon(Icons.person),
+                              border: InputBorder.none,
+
                             ),
                             keyboardType: TextInputType.emailAddress,
                             controller: _nameTextController,
@@ -72,6 +76,37 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
 
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white.withOpacity(0.5),
+                        elevation: 0,
+
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              icon: Icon(Icons.email),
+                              border: InputBorder.none,
+
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailTextController,
+                            validator: (value){
+                              Pattern pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}';
+                              RegExp regex = new RegExp(pattern);
+
+
+                                return null;
+
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10,10,10,10),
                       child: Container(
@@ -112,40 +147,7 @@ class _SignupState extends State<Signup> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Material(
 
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white.withOpacity(0.5),
-                        elevation: 0,
-
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: "Email",
-                              icon: Icon(Icons.email),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _emailTextController,
-                            validator: (value){
-                              Pattern pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}';
-                              RegExp regex = new RegExp(pattern);
-
-                              if(!regex.hasMatch(value))
-                              {
-                                return 'Please make sure your email address is valid';
-                              }
-                              else
-                              {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Material(
@@ -155,27 +157,38 @@ class _SignupState extends State<Signup> {
 
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              icon: Icon(Icons.lock_outline),
+                          child: ListTile(
+                            title: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                icon: Icon(Icons.lock_outline),
+                                border: InputBorder.none,
 
+                              ),
+                              controller: _passwordTextController,
+                              obscureText: hidePass,
+                              validator: (value){
 
+                                if(value.isEmpty)
+                                {
+                                  return 'The password field cannot be empty';
+                                }
+                                else if(value.length < 6)
+                                {
+                                  return 'The password has to be at least 6 characters long';
+                                }
+
+                              },
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _passwordTextController,
-                            validator: (value){
 
-                              if(value.isEmpty)
-                              {
-                                return 'The password field cannot be empty';
-                              }
-                              else if(value.length < 6)
-                              {
-                                return 'The password has to be at least 6 characters long';
-                              }
-                            },
+                            trailing: IconButton(icon: Icon(Icons.remove_red_eye, ), onPressed: (){
+                              setState((){
+                                hidePass = false;
+                              });
+
+                            },) ,
                           ),
+
                         ),
                       ),
                     ),
@@ -192,12 +205,27 @@ class _SignupState extends State<Signup> {
                             decoration: InputDecoration(
                               hintText: "Confirm Password",
                               icon: Icon(Icons.lock_outline),
+                              border: InputBorder.none,
 
 
                             ),
-                            keyboardType: TextInputType.emailAddress,
                             controller: _confirmPasswordController,
+                            obscureText: true,
+                            validator: (value){
 
+                            if(value.isEmpty)
+                            {
+                            return 'The password field cannot be empty';
+                            }
+                            else if(value.length < 6)
+                            {
+                            return 'The password has to be at least 6 characters long';
+                            }
+                            else if(_passwordTextController.text != value)
+                            {
+                            return 'The passwords do not match';
+
+                            }}
 
                           ),
                         ),
@@ -213,7 +241,11 @@ class _SignupState extends State<Signup> {
 
                         child: Padding(
                             padding: const EdgeInsets.only(left: 12),
-                            child: MaterialButton(onPressed: (){},
+                            child: MaterialButton(onPressed: (){
+
+                                  validateForm();
+
+                            },
                               minWidth: MediaQuery.of(context).size.width,
                               child: Text("Sign Up", textAlign: TextAlign.center,
                                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),)
@@ -262,10 +294,47 @@ class _SignupState extends State<Signup> {
       if(e == "male")
         {
           groupValue = e;
+          gender =e;
         }
       else if(e == "female"){
         groupValue = e;
+        gender =e;
+
       }
+
     });
+  }
+
+  Future validateForm() async{
+    FormState formState = _formKey.currentState;
+
+    if(formState.validate())
+      {
+        formState.reset();
+        FirebaseUser user = await firebaseAuth.currentUser();
+
+        //if(user == null)
+          //{
+           firebaseAuth.createUserWithEmailAndPassword(email: _emailTextController.text,
+                password: _passwordTextController.text)
+                .then((user) =>
+                  {
+                    _userServices.createUser(
+
+                      {
+                        "username": _nameTextController.text,
+                        "email": _emailTextController.text,
+                        "userId": user.user.uid,
+                        "gender": gender,
+
+                      }
+                    )
+                  }
+            ).catchError((e) => {print(e.toString())});
+           Navigator.pushReplacement(
+               context, MaterialPageRoute(builder: (context) => HomePage()));
+
+         // }
+      }
   }
 }
