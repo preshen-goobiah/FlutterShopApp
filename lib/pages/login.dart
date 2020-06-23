@@ -16,6 +16,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GoogleSignIn googleSignin = new GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
@@ -39,6 +41,13 @@ class _LoginState extends State<Login> {
     // wait for the data to be returned from SharedPref
     preferences = await SharedPreferences.getInstance();
     isloggedIn = await googleSignin.isSignedIn();
+
+    await firebaseAuth.currentUser().then((user){
+      if(user!=null)
+        {
+          setState(() => isloggedIn = true);
+        }
+    });
 
     if(isloggedIn)
       {
